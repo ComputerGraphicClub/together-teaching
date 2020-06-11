@@ -1,11 +1,10 @@
 let clr
 let socket
 function setup() {
-	let h = windowHeight
-	let w = windowWidth
-	socket = io.connect('https://together-teaching.herokuapp.com/')
+
+	socket = io.connect('http://localhost:3000' || 'https://together-teaching.herokuapp.com/')
   socket.on('mouse', newDrawing);
-  createCanvas(h, w);
+  createCanvas(windowWidth, windowHeight);
   background(51);
   clr = random(360)
   noStroke()
