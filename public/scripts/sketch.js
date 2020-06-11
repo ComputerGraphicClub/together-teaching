@@ -1,8 +1,8 @@
 let clr
 let socket
 function setup() {
-	let h = 400
-	let w = 400
+	let h = windowHeight
+	let w = windowWidth
 	socket = io.connect('https://together-teaching.herokuapp.com/')
   socket.on('mouse', newDrawing);
   createCanvas(h, w);
