@@ -38,7 +38,7 @@ function mouseDragged() {
 }
 function newDrawing(data){
 	data.color = upgradeColor(data.color)
-	displayDot(data.x, data.y, data.color, 30)
+	displayDot(data.x, data.y, data.color, 90)
 }
 function upgradeColor(c){
 	if (c < 0){
