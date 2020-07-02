@@ -37,15 +37,15 @@ function setup() {
 	scribble.roughness = 2;
 
 	// flower setup
-	asterisk = createSprite(windowWidth/4, windowHeight/2);
+	asterisk = createSprite(windowWidth/4, 0);
   asterisk.addAnimation('normal', 'img/asterisk_normal0001.png', 'img/asterisk_normal0003.png');
   asterisk.addAnimation('stretch', 'img/asterisk_stretching0001.png', 'img/asterisk_stretching0008.png');
-  asterisk.setCollider('circle', 0, 0, 64);
+  asterisk.setCollider('rectangle', 0, 0, 200, 128);
 
-	asterisk2 = createSprite((windowWidth/4)*3, windowHeight/2);
+	asterisk2 = createSprite((windowWidth/4)*3, 0);
   asterisk2.addAnimation('normal', 'img/asterisk_explode0008.png', 'img/asterisk_explode0011.png');
   asterisk2.addAnimation('stretch', 'img/asterisk_explode0001.png', 'img/asterisk_explode0007.png');
-  asterisk2.setCollider('circle', 0, 0, 64);
+  asterisk2.setCollider('rectangle', 0, 0, 200, 128);
 
   platform = createSprite(windowWidth/4, (windowHeight/2)+100);
   platform.addAnimation('normal', 'img/small_platform0001.png', 'img/small_platform0003.png');
@@ -242,13 +242,14 @@ function mouseDragged() {
 	displayDot(mouseX, mouseY, clr)
 }
 function newDrawing(data){
-	data.color = upgradeColor(data.color)
-	displayDot(data.x, data.y, data.color, 90)
+	noStroke();
+	data.color = upgradeColor(data.color);
+	displayDot(data.x, data.y, data.color, 90);
 	//background(bgColor);
 }
 
 function newSound(data){
-	playSoundReceived(data.Drum, data.Clap)
+	playSoundReceived(data.Drum, data.Clap);
 }
 
 function upgradeColor(c){
