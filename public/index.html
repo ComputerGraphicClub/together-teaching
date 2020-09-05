@@ -3,28 +3,378 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-	<meta name="mobile-web-app-capable" content="yes" />
-  <title>Shared Canvas</title>
+  <title>Together</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ranchers&family=Varela+Round&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+
+
   <style>
     body {
       padding: 0;
       margin: 0;
+      background-color: #ac7339;
+      background: url(https://i2.wp.com/www.hgdesigns.co/wp-content/uploads/2018/09/hg-cu-thincardboard-texture.jpg) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      overflow: hidden;
+    }
+
+
+
+
+
+    .btn {
+      padding: 1em 2.1em 1.1em;
+      border-radius: 3px;
+      margin: 8px 8px 8px 8px;
+      color: white;
+      /*color: #67523cc4; */
+      background-color: rgba(0, 0, 0, 0);
+      display: inline-block;
+      background: #e74c3c;
+      -webkit-transition: 0.3s;
+      -moz-transition: 0.3s;
+      -o-transition: 0.3s;
+      transition: 0.3s;
+      /*  font-family: Helvetica, sans-serif;
+      font-family: 'Ranchers', cursive;  */
+      font-family: 'Comfortaa', cursive, serif;
+      letter-spacing: 2px;
+      font-weight: 600;
+      font-size: 2.2em;
+      /* text-transform: uppercase; */
+      text-align: center;
+      text-decoration: none;
+      -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      position: absolute;
+      right: 5%;
+      width: 25%;
+    }
+
+    .btn:hover,
+    .btn:focus {
+      opacity: 0.6;
+
+      ;
+    }
+
+    .btn:active {
+      -webkit-transform: scale(0.80);
+      -moz-transform: scale(0.80);
+      -ms-transform: scale(0.80);
+      -o-transform: scale(0.80);
+      transform: scale(0.80);
+    }
+
+    .btn.block {
+      display: block !important;
+    }
+
+    .btn.circular {
+      border-radius: 50em !important;
+    }
+
+
+    .btn_1 {
+      background-color: rgba(0, 0, 0, 0);
+      top: 3%;
+    }
+
+    .btn_2 {
+      background-color: rgba(0, 0, 0, 0);
+      top: 5%;
+    }
+
+    .btn_3 {
+      background-color: rgba(0, 0, 0, 0);
+      top: 20%;
+    }
+
+    .illustration {
+      width: 70%;
+      position: absolute;
+      bottom: 0px;
+      left: 0px;
+      opacity: 1;
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+    }
+
+    .patron {
+      width: 8%;
+      position: absolute;
+      right: 5%;
+      bottom: 5%;
+      -webkit-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      -moz-box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      box-shadow: 0em -0.3rem 0em rgba(0, 0, 0, 0.2) inset;
+      border-radius: 150px;
+      padding: 10px;
+    }
+
+    .code {
+      font-family: 'Comfortaa', cursive, serif;
+      letter-spacing: 2px;
+      font-weight: 600;
+      font-size: 2em;
+      text-align: center;
+      opacity: 0;
+      width: 60vw;
+      position: absolute;
+      float: left;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.97);
+      transform: translateX(-60vw);
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+    }
+
+    .createPlayground {
+      font-family: 'Comfortaa', cursive, serif;
+      letter-spacing: 2px;
+      font-weight: 600;
+      font-size: 2em;
+      text-align: center;
+      opacity: 0;
+      width: 60vw;
+      position: absolute;
+      float: left;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.97);
+      transform: translateX(-60vw);
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+    }
+
+    input#codeNumber {
+      font-family: 'Comfortaa', cursive, serif;
+      letter-spacing: 2px;
+      font-weight: 600;
+      font-size: 2em;
+      margin-top: 30px;
+      border-radius: 5px;
+      border: solid 2px mediumspringgreen;
+      color: mediumspringgreen;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      padding-right: 10px;
+      outline: none;
+      background-color: rgba(255, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .validCreate {
+      padding-top: 20px;
+      color: mediumspringgreen;
+    }
+
+
+    .lds-ring {
+      display: block;
+      position: relative;
+      width: 160px;
+      height: 160px;
+      z-index: 9999999;
+      margin-left: auto;
+      margin-right: auto;
+      padding-bottom: 50px;
+      /* top: 270px; */
+      opacity: 0;
+    }
+
+    .lds-ring div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 128px;
+      height: 128px;
+      margin: 16px;
+      border: 8px solid black;
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: black transparent transparent transparent;
+    }
+
+    .lds-ring div:nth-child(1) {
+      animation-delay: -0.45s;
+    }
+
+    .lds-ring div:nth-child(2) {
+      animation-delay: -0.3s;
+    }
+
+    .lds-ring div:nth-child(3) {
+      animation-delay: -0.15s;
+    }
+
+    @keyframes lds-ring {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .exitBtn {
+      font-size: 100px;
+      position: relative;
+      /* left: 0px; */
+      /* left: 0px; */
+      float: right;
+      top: 0px;
+      margin-right: 10px;
+      transform: rotateZ(45deg);
+      -webkit-transition: 0.5s;
+      -moz-transition: 0.5s;
+      -o-transition: 0.5s;
+      transition: 0.5s;
+      width: 100px;
+      height: 100px;
+    }
+
+    .exitBtn:hover {
+      transform: rotateZ(225deg);
+    }
+
+    .inputCode {
+      transform: translateY(30vh);
+    }
+
+    .inputCode2 {
+      transform: translateY(25vh);
+    }
+
+    .playGroundCreateNotif {
+    opacity: 0;
+    padding-top: 20px;
+    color: black;
     }
   </style>
-  <script src="./p5.min.js"></script>
-  <script src="./addons/p5.dom.min.js"></script>
-  <script src="./addons/socket.io-client.js"></script>
-  <script src="./addons/p5.scribble.js"></script>
-  <script src="./addons/p5.sound.js"></script>
-  <script src="./addons/p5.play.js"></script>
 
-
-  <script src="./scripts/sketch.js"></script>
 </head>
 
 <body>
+
+
+  <div class="code">
+
+    <div class="exitBtn">+</div>
+    <div class="inputCode">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <strong>Paste the code your teacher send you here</strong><br>
+      <input type="text" id="codeNumber" name="name" required minlength="6" maxlength="6" size="6" autocomplete="off">
+    </div>
+  </div>
+
+
+
+  <div class="createPlayground">
+
+    <div class="exitBtn">+</div>
+    <div class="inputCode2">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
+      <strong>How many pupils ?</strong><br>
+      <input type="text" id="codeNumber" name="name" required minlength="6" maxlength="6" size="3" autocomplete="off"><br>
+      <div class="validCreate">Create</div>
+      <div class="playGroundCreateNotif">The playground number is <span style="font-weight: bold; color: mediumspringgreen; display: inline-block;">31320</span><br>Give it now to yours pupils !</div>
+    </div>
+  </div>
+
+
+  <img src="img/MisterG2.png" class="illustration">
+  <img src="img/patron2.png" class="patron">
+
+  <a class=" btn btn_2 circular" type="button">Create a playground</a>
+  <a class=" btn btn_3 circular" type="button">Join a playground</a>
+
+
+
+
+
+
+
+  <script>
+    $(".btn_2").click(function() {
+
+      $(".createPlayground").css("opacity", "1");
+      $(".createPlayground").css("z-index", "1");
+      $(".createPlayground").css("transform", "translateX(0vw)");
+
+    });
+
+    $(".btn_3").click(function() {
+
+      $(".code").css("opacity", "1");
+      $(".code").css("z-index", "1");
+      $(".code").css("transform", "translateX(0vw)");
+
+    });
+
+    $(".exitBtn").click(function() {
+
+      $(".code").css("transform", "translateX(-60vw)");
+      $(".createPlayground").css("transform", "translateX(-60vw)");
+
+    });
+
+    $(".validCreate").click(function() {
+
+      $(".lds-ring").css("opacity", "1");
+      setTimeout(
+        function() {
+          $(".playGroundCreateNotif").css("opacity", "1");
+          $(".playGroundCreateNotif").css("z-index", "2");
+          $(".lds-ring").css("opacity", "0");
+        }, 2000);
+
+    });
+
+
+
+
+
+
+    $("#codeNumber").on('keyup', function(e) {
+      if (e.keyCode === 13) {
+        $(".lds-ring").css("opacity", "1");
+        setTimeout(
+          function() {
+            location.href = 'play.html';
+          }, 2000);
+
+      }
+    });
+  </script>
+
+
 </body>
 
 </html>

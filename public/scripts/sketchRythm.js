@@ -10,23 +10,11 @@ let GRAVITY = 2;
 let JUMP = 20;
 let bgColor = 0;
 let bg;
-let webcam;
-let imgBook;
 let stateDrum = 0;
 let stateClap = 0;
-
-let scanLine;
-let speed = 5;
-let direction = 1;
-
 function setup() {
 
-	// let div = createDiv('Selectionner un exercice');
-	// div.addClass('exoSource');
-
-	bg = loadImage('img/bg_cardboard.jpg');
-  imgBook = loadImage('img/galerie.png');
-
+  bg = loadImage('img/bg_cardboard.jpg');
 	//socket = io.connect('https://together-teaching.herokuapp.com/')
 	socket = io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
@@ -67,15 +55,6 @@ function setup() {
 	platform2 = createSprite((windowWidth/4)*3, (windowHeight/2)+100);
   platform2.addAnimation('normal', 'img/small_platform0001.png', 'img/small_platform0003.png');
 
-
-	scanLine = height / 2;
-
-	//Webcam//
-	webcam = createCapture(VIDEO);
-  webcam.size(windowWidth*0.3, windowHeight-(windowWidth*0.2));
-
-
-
 }
 
 
@@ -103,8 +82,6 @@ else if (stateClap === 1) {
 	asterisk2.velocity.y = -JUMP;
 }
 
-
-
 }
 
 
@@ -113,10 +90,10 @@ function draw() {
  //background('rgba(0,0,0, 0.95)');
 
 
-
-
  background(bg);
 
+
+ image(drawingCanvas, 0, 0);
 
  stroke(255, 255, 204);
  strokeWeight(3);
@@ -125,14 +102,56 @@ function draw() {
  var angle = 315;
 
  randomSeed(10);
+ scribble.scribbleLine( windowWidth/4, windowHeight/14, windowWidth*0.75, windowHeight/14);
+ scribble.scribbleLine( windowWidth/4, windowHeight/6, windowWidth*0.75, windowHeight/6);
 
+push();
+ strokeWeight(1);
+ scribble.scribbleLine( windowWidth/4, windowHeight/7, windowWidth*0.75, windowHeight/7);
+ scribble.scribbleLine( windowWidth/4, windowHeight/8.5, windowWidth*0.75, windowHeight/8.5);
+ scribble.scribbleLine( windowWidth/4, windowHeight/11, windowWidth*0.75, windowHeight/11);
+pop();
 
- scribble.scribbleLine( windowWidth/4, windowHeight/14, windowWidth/4, windowHeight/14);
- scribble.scribbleLine( windowWidth/4, windowHeight/6, windowWidth/4, windowHeight/6);
+ push();
+ translate(-windowWidth/4, 0);
+ scribble.scribbleRect( windowWidth/2, windowHeight/2, windowHeight/2, windowHeight/2);
+stroke(0, 255, 255);
 
+ scribble.scribbleFilling(
+		 [
+			 (windowWidth/2)-(windowHeight/4),
+			 (windowWidth/2)+(windowHeight/4),
+			 (windowWidth/2)+(windowHeight/4),
+			 (windowWidth/2)-(windowHeight/4)
+		 ],[
+			 (windowHeight/2)-(windowHeight/4),
+			 (windowHeight/2)-(windowHeight/4),
+			 (windowHeight/2)+(windowHeight/4),
+ 			(windowHeight/2)+(windowHeight/4)
+		 ],
+		 gap, angle
+	 );
+	 pop();
+	 push();
+	 translate(windowWidth/4, 0);
+	 scribble.scribbleRect( windowWidth/2, windowHeight/2, windowHeight/2, windowHeight/2);
+	stroke(0, 255, 255);
+	 scribble.scribbleFilling(
+			 [
+				 (windowWidth/2)-(windowHeight/4),
+				 (windowWidth/2)+(windowHeight/4),
+				 (windowWidth/2)+(windowHeight/4),
+				 (windowWidth/2)-(windowHeight/4)
+			 ],[
+				 (windowHeight/2)-(windowHeight/4),
+				 (windowHeight/2)-(windowHeight/4),
+				 (windowHeight/2)+(windowHeight/4),
+	 			(windowHeight/2)+(windowHeight/4)
+			 ],
+			 gap, angle
+		 );
 
-
-
+		 pop();
 
 		 // Animation flower 1
 		 asterisk.velocity.y += GRAVITY;
@@ -151,78 +170,18 @@ function draw() {
 		}
 
 
-		 //drawSprites();
+		 drawSprites();
 		 playSound();
 
 		   stateDrum = 0;
 			 stateClap = 0;
 
-// Scan Book //
-     push();
-       fill('rgba(0, 0, 0, 0.5)');
-       rect(windowWidth*0.05, windowWidth*0.05, windowWidth*0.4, windowHeight-(windowWidth*0.1), 30);
-			 //image(imgBook, windowWidth*0.05 , windowWidth*0.05);
-			 image(drawingCanvas, 0, 0);
-			 imgBook.resize(windowWidth*0.4, 0);
-			 textFont("Comfortaa");
-			 textSize(40);
-			 textAlign(CENTER, CENTER);
-			 noStroke();
-			 fill(255, 255, 255);
-       text('Scan your book', windowWidth*0.25, windowHeight-(windowWidth*0.1));
 
-
-pop();
-
-
-push();
-	fill('rgba(0, 0, 0, 0.5)');
-	rect(windowWidth*0.55, windowWidth*0.05, windowWidth*0.4, windowHeight-(windowWidth*0.1), 30);
-	image(imgBook, windowWidth*0.55 , windowWidth*0.05);
-	image(drawingCanvas, 0, 0);
-	imgBook.resize(windowWidth*0.4, 0);
-	textFont("Comfortaa");
-	textSize(40);
-	textAlign(CENTER, CENTER);
-	noStroke();
-	fill(255, 255, 255);
-	text('Explore gallery', windowWidth*0.75, windowHeight-(windowWidth*0.1));
-pop();
-
-
-
-
-// Webcam
-
-push();
-translate(windowWidth/2,0);
-scale(-1.0,1.0);
-image(webcam, windowWidth*0.1, windowWidth*0.07, windowWidth*0.3, windowHeight-(windowWidth*0.2));
-pop();
-
-rect(windowWidth*0.1, windowWidth*0.07, windowWidth*0.3, windowHeight-(windowWidth*0.2), 0);
-
-//scanner
-
-			 push();
-				stroke('rgba(0,250,154, 0.5)');
-			  strokeWeight(20);
-			  line(width*0.1, scanLine, width*0.40, scanLine);
-			 scanLine = scanLine - (speed*direction);
-			 pop();
-			 if (scanLine > height-(width*0.14)) {
-			 	direction = 1;
-			 }
-			  if (scanLine < 0+(width*0.08)) {
-			 	direction = -1;
-			 }
 
 
 }
 
-function clickBook() {
-  background(255);
-}
+
 
 function playSound() {
 if (stateDrum === 1) {
