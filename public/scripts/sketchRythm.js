@@ -13,11 +13,15 @@ let bg;
 let stateDrum = 0;
 let stateClap = 0;
 
+let iconSun;
+let iconMoon;
+let iconCamera;
+
 function setup() {
 
   bg = loadImage('img/bg_cardboard.jpg');
-	socket = io.connect('https://together-teaching.herokuapp.com/')
-	//socket = io.connect('http://localhost:3000')
+	//socket = io.connect('https://together-teaching.herokuapp.com/')
+	socket = io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
 	socket.on('mouse', newSound);
   createCanvas(windowWidth, windowHeight);
@@ -26,6 +30,9 @@ function setup() {
 
 	drum = loadSound('scripts/kick.mp3');
 	clap = loadSound('scripts/hihat.mp3');
+  iconSun = loadImage('img/icon_sun.png'); // Load the image
+  iconMoon = loadImage('img/icon_moon.png'); // Load the image
+  iconCamera = loadImage('img/icon_camera.png'); // Load the image
 
   background(bgColor);
 	//frameRate(10);
@@ -63,33 +70,37 @@ function setup() {
   myButton_color_green = new Clickable();     //Create button
   myButton_color_erase = new Clickable();     //Create Button
   myButton_color_black = new Clickable();     //Create button
+  myButton_color_icon_sun = new Clickable();     //Create button
+  myButton_color_icon_moon = new Clickable();     //Create button
 
 
-  myButton_color_red.locate((windowWidth-80), 50);
+
+  myButton_color_red.locate((windowWidth-83), (windowHeight-80));
   myButton_color_red.width = 30;
   myButton_color_red.height = 30;
   myButton_color_red.strokeWeight = 1;
   myButton_color_red.cornerRadius = 30;
   myButton_color_red.text = "";
   myButton_color_red.stroke = "#FEFFCD";
-  myButton_color_red.color = "#FE2C02";   //Position Button
+  myButton_color_red.color = "#EB7AA6";   //Position Button
   myButton_color_red.onPress = function(){  //When myButton is pressed
     this.strokeWeight = 3;
     myButton_color_green.strokeWeight = 1;
     myButton_color_erase.strokeWeight = 1;
     myButton_color_black.strokeWeight = 1;    //Change button color
     //bg= 0;
-    clr = 10;            //Show an alert message
+
+    clr = 10;        //Show an alert message
   }
 
-  myButton_color_green.locate((windowWidth-80), 90);
+  myButton_color_green.locate((windowWidth-120), (windowHeight-80));
   myButton_color_green.width = 30;
   myButton_color_green.height = 30;
   myButton_color_green.strokeWeight = 1;
   myButton_color_green.cornerRadius = 30;
   myButton_color_green.text = "";
   myButton_color_green.stroke = "#FEFFCD";
-  myButton_color_green.color = "#00FFBE";   //Position Button
+  myButton_color_green.color = "#00FFFF";   //Position Button
   myButton_color_green.onPress = function(){  //When myButton is pressed
     this.strokeWeight = 3;
     myButton_color_red.strokeWeight = 1;
@@ -99,24 +110,24 @@ function setup() {
     clr = 165;            //Show an alert message
   }
 
-  myButton_color_black.locate((windowWidth-80), 130);
+  myButton_color_black.locate((windowWidth-100), (windowHeight-110));
   myButton_color_black.width = 30;
   myButton_color_black.height = 30;
   myButton_color_black.strokeWeight = 1;
   myButton_color_black.cornerRadius = 30;
   myButton_color_black.text = "";
   myButton_color_black.stroke = "#FEFFCD";
-  myButton_color_black.color = "#000000";   //Position Button
+  myButton_color_black.color = "#E7BF12";   //Position Button
   myButton_color_black.onPress = function(){  //When myButton is pressed
     this.strokeWeight = 3;
     myButton_color_red.strokeWeight = 1;
     myButton_color_green.strokeWeight = 1;
     myButton_color_erase.strokeWeight = 1;  //Change button color
     //bg= 0;
-    clr = 190;            //Show an alert message
+    clr = 50;            //Show an alert message
   }
 
-  myButton_color_erase.locate((windowWidth-80), 170);
+  myButton_color_erase.locate((windowWidth-65), (windowHeight-110));
   myButton_color_erase.width = 30;
   myButton_color_erase.height = 30;
   myButton_color_erase.strokeWeight = 1;
@@ -130,7 +141,43 @@ function setup() {
     myButton_color_green.strokeWeight = 1;
     myButton_color_black.strokeWeight = 1;      //Change button color
     //bg= 0;
-    clr = 240;            //Show an alert message
+    document.location.reload(true);            //Show an alert message
+  }
+
+  myButton_color_icon_sun.locate((windowWidth-155), (windowHeight-80));
+  myButton_color_icon_sun.width = 30;
+  myButton_color_icon_sun.height = 30;
+  myButton_color_icon_sun.strokeWeight = 1;
+  myButton_color_icon_sun.cornerRadius = 30;
+  myButton_color_icon_sun.text = "";
+  myButton_color_icon_sun.stroke = "#FEFFCD";
+  myButton_color_icon_sun.color = "rgba(0,255,0, 0)";
+  myButton_color_icon_sun.onPress = function(){  //When myButton is pressed
+    this.strokeWeight = 3;
+    myButton_color_icon_moon.strokeWeight = 1;
+    this.color = "#000000";
+    myButton_color_icon_moon.color = "#000000";
+    bg=0;
+    iconSun = loadImage('img/icon_moon.png');
+          //Show an alert message
+  }
+
+  myButton_color_icon_moon.locate((windowWidth-135), (windowHeight-110));
+  myButton_color_icon_moon.width = 30;
+  myButton_color_icon_moon.height = 30;
+  myButton_color_icon_moon.strokeWeight = 1;
+  myButton_color_icon_moon.cornerRadius = 30;
+  myButton_color_icon_moon.text = "";
+  myButton_color_icon_moon.stroke = "#FEFFCD";
+  myButton_color_icon_moon.color = "rgba(0,255,0, 0)";
+  myButton_color_icon_moon.onPress = function(){  //When myButton is pressed
+    this.strokeWeight = 3;
+    this.color = "#B0864E";
+    myButton_color_icon_sun.strokeWeight = 1;
+    myButton_color_icon_sun.color = "#B0864E";
+    bg = loadImage('img/bg_cardboard.jpg');
+
+          //Show an alert message
   }
 
 
@@ -182,6 +229,11 @@ function draw() {
  myButton_color_green.draw();
  myButton_color_black.draw();
  myButton_color_erase.draw();
+ myButton_color_icon_sun.draw();
+ myButton_color_icon_moon.draw();
+
+  image(iconSun, (windowWidth-150), (windowHeight-75), 20, 20);
+  image(iconCamera, (windowWidth-129), (windowHeight-105), 20, 20);
 
  // Fin UI
 
@@ -299,7 +351,7 @@ else {}
 function keyPressed() {
 	if (keyCode === 65) {
     stateDrum = 1;
-    bg=0;
+
 }
 
 else if (keyCode === 90) {
