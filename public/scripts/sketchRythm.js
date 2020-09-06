@@ -16,8 +16,8 @@ let stateClap = 0;
 function setup() {
 
   bg = loadImage('img/bg_cardboard.jpg');
-	//socket = io.connect('https://together-teaching.herokuapp.com/')
-	socket = io.connect('http://localhost:3000')
+	socket = io.connect('https://together-teaching.herokuapp.com/')
+	//socket = io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
 	socket.on('mouse', newSound);
   createCanvas(windowWidth, windowHeight);
