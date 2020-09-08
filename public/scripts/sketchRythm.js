@@ -1,4 +1,6 @@
-let clr;
+let clrR;
+let clrG;
+let clrB;
 let socket;
 let scribble;
 let drawingCanvas;
@@ -16,12 +18,15 @@ let stateClap = 0;
 let iconSun;
 let iconMoon;
 let iconCamera;
+let iconPrint;
+let iconExit;
+let alphaJauge = 0;
 
 function setup() {
 
   bg = loadImage('img/bg_cardboard.jpg');
-	//socket = io.connect('https://together-teaching.herokuapp.com/')
-	socket = io.connect('http://localhost:3000')
+  socket = io.connect('https://together-teaching.herokuapp.com/')
+	//socket = io.connect('http://localhost:3000')
   socket.on('mouse', newDrawing);
 	socket.on('mouse', newSound);
   createCanvas(windowWidth, windowHeight);
@@ -33,13 +38,17 @@ function setup() {
   iconSun = loadImage('img/icon_sun.png'); // Load the image
   iconMoon = loadImage('img/icon_moon.png'); // Load the image
   iconCamera = loadImage('img/icon_camera.png'); // Load the image
+  iconPrint = loadImage('img/icon_print.png'); // Load the image
+  iconExit = loadImage('img/icon_exit.png'); // Load the image
 
   background(bgColor);
 	//frameRate(10);
 
 
   //clr = random(360);
-  clr = 50;
+  clrR = 231;
+  clrG = 191;
+  clrB = 18;
   //noStroke()
 
   pg = createGraphics(windowWidth, windowHeight);
@@ -72,12 +81,24 @@ function setup() {
   myButton_color_black = new Clickable();     //Create button
   myButton_color_icon_sun = new Clickable();     //Create button
   myButton_color_icon_moon = new Clickable();     //Create button
+  myButton_color_icon_print = new Clickable();     //Create button
 
+  myButton_color_icon_print.locate((windowWidth-215), (windowHeight-75));
+  myButton_color_icon_print.width = 35;
+  myButton_color_icon_print.height = 35;
+  myButton_color_icon_print.strokeWeight = 1;
+  myButton_color_icon_print.cornerRadius = 30;
+  myButton_color_icon_print.text = "";
+  myButton_color_icon_print.stroke = "#FEFFCD";
+  myButton_color_icon_print.color = "#B0864E";   //Position Button
+  myButton_color_icon_print.onPress = function(){  //When myButton is pressed
+  window.location.assign("https://together-teaching.herokuapp.com/play.html")
+  }
 
 
   myButton_color_red.locate((windowWidth-83), (windowHeight-80));
-  myButton_color_red.width = 30;
-  myButton_color_red.height = 30;
+  myButton_color_red.width = 40;
+  myButton_color_red.height = 40;
   myButton_color_red.strokeWeight = 1;
   myButton_color_red.cornerRadius = 30;
   myButton_color_red.text = "";
@@ -90,12 +111,14 @@ function setup() {
     myButton_color_black.strokeWeight = 1;    //Change button color
     //bg= 0;
 
-    clr = 10;        //Show an alert message
+    clrR = 235;
+    clrG = 122;
+    clrB = 166;       //Show an alert message
   }
 
   myButton_color_green.locate((windowWidth-120), (windowHeight-80));
-  myButton_color_green.width = 30;
-  myButton_color_green.height = 30;
+  myButton_color_green.width = 40;
+  myButton_color_green.height = 40;
   myButton_color_green.strokeWeight = 1;
   myButton_color_green.cornerRadius = 30;
   myButton_color_green.text = "";
@@ -107,12 +130,14 @@ function setup() {
     myButton_color_erase.strokeWeight = 1;
     myButton_color_black.strokeWeight = 1;     //Change button color
     //bg= 0;
-    clr = 165;            //Show an alert message
+    clrR = 0;
+    clrG = 255;
+    clrB = 255;           //Show an alert message
   }
 
   myButton_color_black.locate((windowWidth-100), (windowHeight-110));
-  myButton_color_black.width = 30;
-  myButton_color_black.height = 30;
+  myButton_color_black.width = 40;
+  myButton_color_black.height = 40;
   myButton_color_black.strokeWeight = 1;
   myButton_color_black.cornerRadius = 30;
   myButton_color_black.text = "";
@@ -124,12 +149,14 @@ function setup() {
     myButton_color_green.strokeWeight = 1;
     myButton_color_erase.strokeWeight = 1;  //Change button color
     //bg= 0;
-    clr = 50;            //Show an alert message
+    clrR = 231;
+    clrG = 191;
+    clrB = 18;              //Show an alert message
   }
 
-  myButton_color_erase.locate((windowWidth-65), (windowHeight-110));
-  myButton_color_erase.width = 30;
-  myButton_color_erase.height = 30;
+  myButton_color_erase.locate((windowWidth-195), (windowHeight-110));
+  myButton_color_erase.width = 35;
+  myButton_color_erase.height = 35;
   myButton_color_erase.strokeWeight = 1;
   myButton_color_erase.cornerRadius = 30;
   myButton_color_erase.text = "";
@@ -144,37 +171,41 @@ function setup() {
     document.location.reload(true);            //Show an alert message
   }
 
-  myButton_color_icon_sun.locate((windowWidth-155), (windowHeight-80));
-  myButton_color_icon_sun.width = 30;
-  myButton_color_icon_sun.height = 30;
+  myButton_color_icon_sun.locate((windowWidth-175), (windowHeight-75));
+  myButton_color_icon_sun.width = 35;
+  myButton_color_icon_sun.height = 35;
   myButton_color_icon_sun.strokeWeight = 1;
   myButton_color_icon_sun.cornerRadius = 30;
   myButton_color_icon_sun.text = "";
   myButton_color_icon_sun.stroke = "#FEFFCD";
-  myButton_color_icon_sun.color = "rgba(0,255,0, 0)";
+  myButton_color_icon_sun.color = "#B0864E";
   myButton_color_icon_sun.onPress = function(){  //When myButton is pressed
     this.strokeWeight = 3;
     myButton_color_icon_moon.strokeWeight = 1;
     this.color = "#000000";
     myButton_color_icon_moon.color = "#000000";
+    myButton_color_erase.color = "#000000";
+    myButton_color_icon_print.color = "#000000";
     bg=0;
     iconSun = loadImage('img/icon_moon.png');
           //Show an alert message
   }
 
-  myButton_color_icon_moon.locate((windowWidth-135), (windowHeight-110));
-  myButton_color_icon_moon.width = 30;
-  myButton_color_icon_moon.height = 30;
+  myButton_color_icon_moon.locate((windowWidth-155), (windowHeight-110));
+  myButton_color_icon_moon.width = 35;
+  myButton_color_icon_moon.height = 35;
   myButton_color_icon_moon.strokeWeight = 1;
   myButton_color_icon_moon.cornerRadius = 30;
   myButton_color_icon_moon.text = "";
   myButton_color_icon_moon.stroke = "#FEFFCD";
-  myButton_color_icon_moon.color = "rgba(0,255,0, 0)";
+  myButton_color_icon_moon.color = "#B0864E";
   myButton_color_icon_moon.onPress = function(){  //When myButton is pressed
     this.strokeWeight = 3;
     this.color = "#B0864E";
     myButton_color_icon_sun.strokeWeight = 1;
     myButton_color_icon_sun.color = "#B0864E";
+    myButton_color_erase.color = "#B0864E";
+    myButton_color_icon_print.color = "#B0864E";
     bg = loadImage('img/bg_cardboard.jpg');
 
           //Show an alert message
@@ -187,9 +218,10 @@ function setup() {
 
 
 
-function displayDot(x, y, color, color2 = 100){
-	drawingCanvas.colorMode(HSB)
-	drawingCanvas.fill(color, 100, color2)
+function displayDot(x, y, colorR, colorG, colorB){
+	//drawingCanvas.colorMode(HSB)
+  drawingCanvas.noStroke();
+	drawingCanvas.fill(colorR, colorG, colorB)
 	drawingCanvas.ellipse(x, y, 10)
 	drawingCanvas.colorMode(RGB)
 }
@@ -224,21 +256,26 @@ function draw() {
  image(drawingCanvas, 0, 0);
 
 // UI
-
+push();
+  //scale(1.3);
+  //translate(-250, -150);
  myButton_color_red.draw();
  myButton_color_green.draw();
  myButton_color_black.draw();
  myButton_color_erase.draw();
  myButton_color_icon_sun.draw();
  myButton_color_icon_moon.draw();
+ myButton_color_icon_print.draw();
 
-  image(iconSun, (windowWidth-150), (windowHeight-75), 20, 20);
-  image(iconCamera, (windowWidth-129), (windowHeight-105), 20, 20);
-
+   image(iconSun, (windowWidth-169.5), (windowHeight-70), 25, 25);
+   image(iconCamera, (windowWidth-149), (windowHeight-105), 25, 25);
+   image(iconExit, (windowWidth-210), (windowHeight-70), 25, 25);
+   image(iconPrint, (windowWidth-189.5), (windowHeight-105), 25, 25);
+pop();
  // Fin UI
 
  stroke(255, 255, 204);
- strokeWeight(3);
+ strokeWeight(2);
  //noFill();
  var gap = 30;
  var angle = 315;
@@ -247,8 +284,31 @@ function draw() {
  scribble.scribbleLine( windowWidth/4, windowHeight/14, windowWidth*0.75, windowHeight/14);
  scribble.scribbleLine( windowWidth/4, windowHeight/6, windowWidth*0.75, windowHeight/6);
 
+//jauge reussite
 push();
+stroke('rgba(255, 255, 204,' + alphaJauge + ')');
+scribble.scribbleRect( 410, windowHeight-80, 700, 70);
+stroke('rgba(231, 191, 18,' + alphaJauge + ')');
  strokeWeight(1);
+
+ scribble.scribbleFilling(
+		 [
+			 70,
+			 640,
+			 640,
+			 70
+		 ],[
+			 720,
+			 720,
+			 655,
+ 			655
+		 ],
+		 30, angle
+	 );
+pop();
+
+push();
+ strokeWeight(0.5);
  scribble.scribbleLine( windowWidth/4, windowHeight/7, windowWidth*0.75, windowHeight/7);
  scribble.scribbleLine( windowWidth/4, windowHeight/8.5, windowWidth*0.75, windowHeight/8.5);
  scribble.scribbleLine( windowWidth/4, windowHeight/11, windowWidth*0.75, windowHeight/11);
@@ -359,6 +419,14 @@ else if (keyCode === 90) {
 
 }
 
+else if (keyCode === 74) {
+  alphaJauge = 0;
+}
+
+else if (keyCode === 72) {
+  alphaJauge = 1;
+}
+
 	else {
 stateDrum = 0;
 stateClap = 0;
@@ -374,23 +442,25 @@ function mouseDragged() {
   //clr = 10;  //orange sanguine
 
 
-	let data = {
+  let data = {
 		x: mouseX,
 		y: mouseY,
-		color: clr,
+		colorR: clrR,
+    colorG: clrG,
+    colorB: clrB,
 		Drum : stateDrum,
 		Clap : stateClap
 		//background : bgColor
 	}
 	socket.emit('mouse', data);
-		console.log('sending:', mouseX +',', mouseY +',', clr +',', stateDrum +',', stateClap)
+  console.log('sending:', mouseX +',', mouseY +',', clrR +',', clrG +',', clrB +',', stateDrum +',', stateClap)
 	drawingCanvas.noStroke()
-	displayDot(mouseX, mouseY, clr)
+		displayDot(mouseX, mouseY, clrR, clrG, clrB)
 }
 function newDrawing(data){
 	noStroke();
 	data.color = upgradeColor(data.color);
-	displayDot(data.x, data.y, data.color, 90);
+	displayDot(data.x, data.y, data.colorR, data.colorG, data.colorB);
 	//background(bgColor);
 }
 

@@ -7,10 +7,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Ranchers&family=Varela+Round&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- <script src="jquery-1.8.2.min.js"></script> -->
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0" /> -->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	<meta name="mobile-web-app-capable" content="yes" />
-	<link rel="apple-touch-icon" href="https://play.google.com/store/apps/details?id=io.hexman.xiconchanger&hl=fr_CA" />
+	<link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
 
 
@@ -19,13 +20,13 @@
       padding: 0;
       margin: 0;
       background-color: #ac7339;
-      background: url(https://i2.wp.com/www.hgdesigns.co/wp-content/uploads/2018/09/hg-cu-thincardboard-texture.jpg) no-repeat center center fixed;
+      background: url(img/bg_cardboard.png) no-repeat center center fixed;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
       overflow: hidden;
-        position: fixed;
+        /* position: fixed; */
     }
 
 
@@ -98,7 +99,7 @@
 
     .btn_3 {
       background-color: rgba(0, 0, 0, 0);
-      top: 20%;
+      top: 27%;
     }
 
     .illustration {
@@ -132,7 +133,7 @@
       font-size: 2em;
       text-align: center;
       opacity: 0;
-      width: 60vw;
+      width: 50vw;
       position: absolute;
       float: left;
       height: 100vh;
@@ -151,7 +152,7 @@
       font-size: 2em;
       text-align: center;
       opacity: 0;
-      width: 60vw;
+      width: 50vw;
       position: absolute;
       float: left;
       height: 100vh;
@@ -257,17 +258,23 @@
     }
 
     .inputCode {
-      transform: translateY(30vh);
+      transform: translateY(15vh);
     }
 
     .inputCode2 {
-      transform: translateY(25vh);
+      transform: translateY(10vh);
     }
 
     .playGroundCreateNotif {
     opacity: 0;
     padding-top: 20px;
     color: black;
+    font-size: 25px;
+    }
+
+    .text_home {
+      padding-left: 30px;
+      padding-right: 30px;
     }
   </style>
 
@@ -287,7 +294,7 @@
         <div></div>
       </div>
 
-      <strong>Paste the code your teacher send you here</strong><br>
+      <div class="text_home"><strong>Paste the code your teacher send you here</strong></div><br>
       <input type="text" id="codeNumber" name="name" required minlength="6" maxlength="6" size="6" autocomplete="off">
     </div>
   </div>

@@ -18,6 +18,20 @@ let stateClap = 0;
 let scanLine;
 let speed = 5;
 let direction = 1;
+let img_scan;
+let img_scanX;
+let img_scanY;
+let img_galery;
+let img_galeryX = 1;
+let img_galeryY = 1;
+
+let webcamX;
+let webcamY;
+
+let colorScanLine;
+
+let textX;
+let textY;
 
 function setup() {
 
@@ -26,6 +40,19 @@ function setup() {
 
 	bg = loadImage('img/bg_cardboard.jpg');
   imgBook = loadImage('img/galerie.png');
+	img_scan = loadImage('img/scan_img.png');
+	img_galery = loadImage('img/galery_img2.png');
+
+	img_scanY = windowHeight;
+	img_scanX = windowWidth;
+
+	webcamX = windowWidth*0.33;
+	webcamY = 470;
+
+	textX = windowWidth*0.51;
+	textY = windowHeight-160;
+
+	colorScanLine = 'rgba(235, 122, 166, 0.5)';
 
 	//socket = io.connect('https://together-teaching.herokuapp.com/')
 	socket = io.connect('http://localhost:3000')
@@ -50,23 +77,6 @@ function setup() {
 	scribble.bowing    = 0.2;
 	scribble.roughness = 2;
 
-	// flower setup
-	asterisk = createSprite(windowWidth/4, 0);
-  asterisk.addAnimation('normal', 'img/asterisk_normal0001.png', 'img/asterisk_normal0003.png');
-  asterisk.addAnimation('stretch', 'img/asterisk_stretching0001.png', 'img/asterisk_stretching0008.png');
-  asterisk.setCollider('rectangle', 0, 0, 200, 128);
-
-	asterisk2 = createSprite((windowWidth/4)*3, 0);
-  asterisk2.addAnimation('normal', 'img/asterisk_explode0008.png', 'img/asterisk_explode0011.png');
-  asterisk2.addAnimation('stretch', 'img/asterisk_explode0001.png', 'img/asterisk_explode0007.png');
-  asterisk2.setCollider('rectangle', 0, 0, 200, 128);
-
-  platform = createSprite(windowWidth/4, (windowHeight/2)+100);
-  platform.addAnimation('normal', 'img/small_platform0001.png', 'img/small_platform0003.png');
-
-	platform2 = createSprite((windowWidth/4)*3, (windowHeight/2)+100);
-  platform2.addAnimation('normal', 'img/small_platform0001.png', 'img/small_platform0003.png');
-
 
 	scanLine = height / 2;
 
@@ -75,6 +85,107 @@ function setup() {
   webcam.size(windowWidth*0.3, windowHeight-(windowWidth*0.2));
 
 
+	//Setup UI
+
+	myButton_scan = new Clickable();     //Create button
+	myButton_galery = new Clickable();     //Create button
+	myButton_return = new Clickable();
+	myButton_GoMusic = new Clickable();
+	myButton_GoMath = new Clickable();
+	myButton_GoEnglish = new Clickable();
+
+
+    myButton_GoEnglish.locate(365, 70);
+		myButton_GoEnglish.width = 180;
+		myButton_GoEnglish.height = 450;
+    myButton_GoEnglish.strokeWeight = 0;
+		myButton_GoEnglish.text ="";
+		myButton_GoEnglish.color = 'rgba(0,0,0, 0)';
+		myButton_GoEnglish.onPress = function(){
+		window.location.assign("playEnglish.html")
+		}
+
+		myButton_GoMath.locate(770, 200);
+		myButton_GoMath.width = 160;
+		myButton_GoMath.height = 180;
+		myButton_GoMath.strokeWeight = 0;
+		myButton_GoMath.text ="";
+		myButton_GoMath.color = 'rgba(0,0,0, 0)';
+		myButton_GoMath.onPress = function(){
+		window.location.assign("playMath.html")
+		}
+
+		myButton_GoMusic.locate(610, 100);
+		myButton_GoMusic.width = 150;
+		myButton_GoMusic.height = 160;
+		myButton_GoMusic.strokeWeight = 0;
+		myButton_GoMusic.text ="";
+		myButton_GoMusic.color = 'rgba(0,0,0, 0)';
+		myButton_GoMusic.onPress = function(){
+		window.location.assign("playRythm.html")
+		}
+
+
+		myButton_scan.locate((windowWidth/2)-35, (windowHeight-80));
+  	myButton_scan.width = 30;
+  	myButton_scan.height = 30;
+  	myButton_scan.strokeWeight = 3;
+  	myButton_scan.cornerRadius = 30;
+  	myButton_scan.text = "";
+  	myButton_scan.stroke = "#FEFFCD";
+  	myButton_scan.color = "#8d6f47";   //Position Button
+  	myButton_scan.onPress = function(){  //When myButton is pressed
+    this.strokeWeight = 3;
+		this.color = "#8d6f47";
+		myButton_galery.color = "#c19e73";
+    myButton_galery.strokeWeight = 1;
+		img_galeryX = 1;
+		img_galeryY = 1;
+		img_scanX = windowWidth;
+		img_scanY = windowHeight;
+		colorScanLine = 'rgba(235, 122, 166, 0.5)';;
+		webcamX = windowWidth*0.33;
+		webcamY = 470;
+		textX = windowWidth*0.51;
+		textY = windowHeight-160;
+  }
+
+	myButton_galery.locate((windowWidth/2)+15, (windowHeight-80));
+	myButton_galery.width = 30;
+	myButton_galery.height = 30;
+	myButton_galery.strokeWeight = 1;
+	myButton_galery.cornerRadius = 30;
+	myButton_galery.text = "";
+	myButton_galery.stroke = "#FEFFCD";
+	myButton_galery.color = "#c19e73";   //Position Button
+	myButton_galery.onPress = function(){  //When myButton is pressed
+	this.strokeWeight = 3;
+	this.color = "#8d6f47";
+	myButton_scan.strokeWeight = 1;
+	myButton_scan.color = "#c19e73";
+	img_galeryX = windowWidth;
+	img_galeryY = windowHeight;
+	img_scanX = 1;
+	img_scanY =1;
+	colorScanLine = 'rgba(0,250,154, 0)';
+	webcamX = 1;
+	webcamY = 1;
+	textX = -400;
+	textY = 0;
+}
+
+myButton_return.locate((windowWidth-60), 20);
+myButton_return.width = 40;
+myButton_return.height = 40;
+myButton_return.strokeWeight = 0;
+myButton_return.color = 'rgba(0,0,0, 0)';
+myButton_return.text = "×";
+myButton_return.textFont = "Comfortaa";
+myButton_return.textSize = 45;
+myButton_return.textColor = 'rgba(0,0,0, 0.15)';
+myButton_return.onPress = function(){
+window.location.assign("https://together-teaching.herokuapp.com/")
+}
 
 }
 
@@ -120,38 +231,13 @@ function draw() {
 
  stroke(255, 255, 204);
  strokeWeight(3);
- //noFill();
- var gap = 30;
- var angle = 315;
-
- randomSeed(10);
-
-
- scribble.scribbleLine( windowWidth/4, windowHeight/14, windowWidth/4, windowHeight/14);
- scribble.scribbleLine( windowWidth/4, windowHeight/6, windowWidth/4, windowHeight/6);
 
 
 
 
 
-		 // Animation flower 1
-		 asterisk.velocity.y += GRAVITY;
-
-		 if(asterisk.collide(platform)) {
-		 	asterisk.velocity.y = 0;
-		 	asterisk.changeAnimation('normal');
-		 }
-
-		 // Animation flower 2
-		asterisk2.velocity.y += GRAVITY;
-
-		if(asterisk2.collide(platform2)) {
-		 asterisk2.velocity.y = 0;
-		 asterisk2.changeAnimation('normal');
-		}
 
 
-		 //drawSprites();
 		 playSound();
 
 		   stateDrum = 0;
@@ -160,34 +246,21 @@ function draw() {
 // Scan Book //
      push();
        fill('rgba(0, 0, 0, 0.5)');
-       rect(windowWidth*0.05, windowWidth*0.05, windowWidth*0.4, windowHeight-(windowWidth*0.1), 30);
-			 //image(imgBook, windowWidth*0.05 , windowWidth*0.05);
+
 			 image(drawingCanvas, 0, 0);
 			 imgBook.resize(windowWidth*0.4, 0);
 			 textFont("Comfortaa");
-			 textSize(40);
+			 textSize(35);
 			 textAlign(CENTER, CENTER);
 			 noStroke();
 			 fill(255, 255, 255);
-       text('Scan your book', windowWidth*0.25, windowHeight-(windowWidth*0.1));
+       text('Scan your book', textX, textY);
 
 
 pop();
 
 
-push();
-	fill('rgba(0, 0, 0, 0.5)');
-	rect(windowWidth*0.55, windowWidth*0.05, windowWidth*0.4, windowHeight-(windowWidth*0.1), 30);
-	image(imgBook, windowWidth*0.55 , windowWidth*0.05);
-	image(drawingCanvas, 0, 0);
-	imgBook.resize(windowWidth*0.4, 0);
-	textFont("Comfortaa");
-	textSize(40);
-	textAlign(CENTER, CENTER);
-	noStroke();
-	fill(255, 255, 255);
-	text('Explore gallery', windowWidth*0.75, windowHeight-(windowWidth*0.1));
-pop();
+
 
 
 
@@ -197,27 +270,35 @@ pop();
 push();
 translate(windowWidth/2,0);
 scale(-1.0,1.0);
-image(webcam, windowWidth*0.1, windowWidth*0.07, windowWidth*0.3, windowHeight-(windowWidth*0.2));
+image(webcam, -180, 60, webcamX, webcamY);
 pop();
 
-rect(windowWidth*0.1, windowWidth*0.07, windowWidth*0.3, windowHeight-(windowWidth*0.2), 0);
+
 
 //scanner
 
 			 push();
-				stroke('rgba(0,250,154, 0.5)');
+				stroke(colorScanLine);
 			  strokeWeight(20);
-			  line(width*0.1, scanLine, width*0.40, scanLine);
+			  line(width*0.35, scanLine, width*0.67, scanLine);
 			 scanLine = scanLine - (speed*direction);
 			 pop();
-			 if (scanLine > height-(width*0.14)) {
+			 if (scanLine > (height-250)) {
 			 	direction = 1;
 			 }
 			  if (scanLine < 0+(width*0.08)) {
 			 	direction = -1;
 			 }
 
+	  image(img_scan, 0 , 0, img_scanX, img_scanY);
+		image(img_galery, 0 , 0, img_galeryX, img_galeryY);
 
+		myButton_scan.draw();
+		myButton_galery.draw();
+		myButton_return.draw();
+		myButton_GoEnglish.draw();
+		myButton_GoMath.draw();
+		myButton_GoMusic.draw();
 }
 
 function clickBook() {
@@ -226,18 +307,12 @@ function clickBook() {
 
 function playSound() {
 if (stateDrum === 1) {
-	drum.play();
-	asterisk.changeAnimation('stretch');
-	asterisk.animation.rewind();
-	asterisk.velocity.y = -JUMP;
+
 	mouseDragged()
 }
 
 else if (stateClap === 1) {
-	clap.play();
-	asterisk2.changeAnimation('stretch');
-	asterisk2.animation.rewind();
-	asterisk2.velocity.y = -JUMP;
+
 		mouseDragged()
 }
 else {}
