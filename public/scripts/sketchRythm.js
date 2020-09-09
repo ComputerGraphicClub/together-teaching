@@ -34,7 +34,7 @@ function setup() {
 	drawingCanvas.clear();
 
 	drum = loadSound('scripts/kick.mp3');
-	clap = loadSound('scripts/hihat.mp3');
+	clap = loadSound('scripts/hihat.wav');
   iconSun = loadImage('img/icon_sun.png'); // Load the image
   iconMoon = loadImage('img/icon_moon.png'); // Load the image
   iconCamera = loadImage('img/icon_camera.png'); // Load the image
